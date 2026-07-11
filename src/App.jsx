@@ -24,21 +24,21 @@ window.addEventListener("unhandledrejection", (e) => {
 
 
 const STAGES = [
-  { id: "home", label: "深柴动力", cam: [-2, 1.5, 5], target: [0, 0, 0], fov: 40, rot: 0,
-    subtitle: "SHENCHAI POWER · 始于 2004",
-    desc: "专业柴油发电机组研发制造商，专注为客户提供可靠的电力解决方案" },
-  { id: "allinone", label: "ALL-IN-ONE", cam: [0, 5, 7.5], target: [0, 0, 0], fov: 26, rot: -1.5,
-    subtitle: "设计与快速部署",
-    desc: "模块化布局，「出厂前整机测试，抵达现场后添加燃料连接电缆即可运行，将部署时间从数周缩短至几天" },
-  { id: "engine", label: "动力系统稳定输出", cam: [0, 1.5, 6], target: [0, 0, 0], fov: 28, rot: 0,
-    subtitle: "多元动力 · 按需匹配",
-    desc: "提供全系列发动机品牌选择，满足不同应用场景，稳定输出每一瓦特" },
-  { id: "airflow", label: "气流设计", cam: [-7.5, 5, 4.5], target: [0, 0, 0], fov: 24, rot: 1.5,
-    subtitle: "AIRFLOW OPTIMIZATION",
-    desc: "采用斜向导流进气结构，进气更加顺畅、排气阻力低、散热效率高" },
-  { id: "chassis", label: "减震设计结构", cam: [-5.5, -1.5, 1.8], target: [0, 0.5, 0], fov: 30, rot: 3.0,
-    subtitle: "强化底盘 · IP55 防护",
-    desc: "强化底盘结构、高效减震系统、底盘IP55防护等级。为您考虑到了恶劣工况的使用环境，确保在任何情况下机组结构都能稳定运行" },
+  { id: "home", label: "开发中", cam: [-2, 1.5, 5], target: [0, 0, 0], fov: 40, rot: 0,
+    subtitle: "开发中",
+    desc: "开发中" },
+  { id: "allinone", label: "开发中", cam: [0, 5, 7.5], target: [0, 0, 0], fov: 26, rot: -1.5,
+    subtitle: "开发中",
+    desc: "开发中" },
+  { id: "engine", label: "开发中", cam: [0, 1.5, 6], target: [0, 0, 0], fov: 28, rot: 0,
+    subtitle: "开发中",
+    desc: "开发中" },
+  { id: "airflow", label: "开发中", cam: [-7.5, 5, 4.5], target: [0, 0, 0], fov: 24, rot: 1.5,
+    subtitle: "开发中",
+    desc: "开发中" },
+  { id: "chassis", label: "开发中", cam: [-5.5, -1.5, 1.8], target: [0, 0.5, 0], fov: 30, rot: 3.0,
+    subtitle: "开发中",
+    desc: "开发中" },
 ]
 
 
@@ -243,7 +243,7 @@ function StateTable({ stages, currentIdx, onSelect }) {
 function ContentOverlay({ stages, currentIdx, progress, ready }) {
   const { t } = useLang();
 
-  const visible = ready && progress > 0.005
+  const visible = ready
   if (currentIdx < 0 || currentIdx >= stages.length) return null
   const s = stages[currentIdx]
   const isHome = s.id === "home"
@@ -280,12 +280,12 @@ function ContentOverlay({ stages, currentIdx, progress, ready }) {
         {isA && (
           <div className="allinone-top-right text-block-animate">
             <p className="allinone-desc-text">{t("allinoneDesc")}</p>
-            <img className="module-img" src="/images/allinone.png" alt="ALL-IN-ONE" />
+            <img className="module-img" src="/images/white-placeholder.svg" alt="白色占位图" />
           </div>
         )}
         {isE && (
           <div>
-            <img className="engine-img" src="/images/allinone.jpg" alt="动力系统" />
+            <img className="engine-img" src="/images/white-placeholder.svg" alt="白色占位图" />
             <div className="engine-text-block">
               <p className="engine-desc-text">{t("engineDesc")}</p>
             </div>
@@ -293,13 +293,13 @@ function ContentOverlay({ stages, currentIdx, progress, ready }) {
         )}
         {isAf && (
           <div className="airflow-top-right text-block-animate">
-            <img className="module-img" src="/images/airflow.png" alt="气流设计" />
+            <img className="module-img" src="/images/white-placeholder.svg" alt="白色占位图" />
             <p className="airflow-desc-text">{t("airflowDesc")}</p>
           </div>
         )}
         {isC && (
           <div className="chassis-right text-block-animate">
-            <img className="module-img chassis-img" src="/images/chassis.png" alt="减震设计" />
+            <img className="module-img chassis-img" src="/images/white-placeholder.svg" alt="白色占位图" />
             <p className="chassis-desc-text">{t("chassisDesc")}</p>
           </div>
         )}
@@ -327,6 +327,28 @@ function ContentOverlay({ stages, currentIdx, progress, ready }) {
   )
 }
 
+function TechTags() {
+  const { t } = useLang();
+  return (
+    <div className="tech-tags">
+      <div className="tech-tag">{t("placeholder")}<span className="label">{t("placeholder")}</span></div>
+      <div className="tech-tag">{t("placeholder")}<span className="label">{t("placeholder")}</span></div>
+      <div className="tech-tag">{t("placeholder")}<span className="label">{t("placeholder")}</span></div>
+      <div className="tech-tag">{t("placeholder")}<span className="label">{t("placeholder")}</span></div>
+    </div>
+  )
+}
+
+function FooterInfo() {
+  const { t } = useLang();
+  return (
+    <>
+      <div className="bottom-info">{t("placeholder")}</div>
+      <div className="bottom-info-left">{t("placeholder")}</div>
+    </>
+  )
+}
+
 function Navbar({ progress }) {
   const { lang, setLang, t } = useLang();
   const scrolled = progress > 0.02;
@@ -334,15 +356,15 @@ function Navbar({ progress }) {
     <div className={"navbar" + (scrolled ? " scrolled" : "")}>
       <img className="nav-logo" src="/logo.png" alt="Shenchai" />
       <div className="nav-links">
-        <a href="#">{t("navHome")}</a>
-        <a href="#">{t("navProducts")}</a>
-        <a href="#">{t("navAbout")}</a>
-        <a href="#">{t("navCases")}</a>
-        <a href="#">{t("navService")}</a>
+        <a href="https://shenchaidongli.pages.dev/">{t("navHome")}</a>
+        <a href="https://shenchaidongli.pages.dev/#products">{t("navProducts")}</a>
+        <a href="https://shenchaidongli.pages.dev/#about">{t("navAbout")}</a>
+        <a href="https://shenchaidongli.pages.dev/#cases">{t("navCases")}</a>
+        <a href="https://shenchaidongli.pages.dev/#contact">{t("navService")}</a>
       </div>
       <div className="lang-btns">
-        <button className={"lang-btn" + (lang === "zh" ? " active" : "")} onClick={() => setLang("zh")}>中文</button>
-        <button className={"lang-btn" + (lang === "en" ? " active" : "")} onClick={() => setLang("en")}>EN</button>
+        <button type="button" className={"lang-btn" + (lang === "zh" ? " active" : "")} onClick={() => setLang("zh")}>中文</button>
+        <button type="button" className={"lang-btn" + (lang === "en" ? " active" : "")} onClick={() => setLang("en")}>EN</button>
       </div>
     </div>
   );
@@ -415,7 +437,7 @@ export default function App() {
           <pointLight position={[0, 4, 2]} intensity={3.0} color="#ff8844" />
           <hemisphereLight args={["#ffffff", "#446688", 1.2]} />
           <Suspense fallback={null}>
-            <ModelGroup url="/generator.glb" progress={progress} />
+            <ModelGroup url="/cabinet.glb" progress={progress} />
           </Suspense>
           <Particles />
           <LightingController />
@@ -428,18 +450,12 @@ export default function App() {
       <Preloader loaded={ready} />
 
       <div className="ui-layer">
-        <div className="tech-tags">
-          <div className="tech-tag">500kW<span className="label">RATED POWER</span></div>
-          <div className="tech-tag">50Hz<span className="label">FREQUENCY</span></div>
-          <div className="tech-tag">IP55<span className="label">PROTECTION</span></div>
-          <div className="tech-tag">≥92%<span className="label">EFFICIENCY</span></div>
-        </div>
+        <TechTags />
         <ContentOverlay stages={STAGES} currentIdx={currentStage} progress={progress} ready={ready} />
         <StateTable stages={STAGES} currentIdx={currentStage} onSelect={goToStage} />
 <ScrollHint show={ready} progress={progress} />
       </div>
-      <div className="bottom-info">© 2026 深柴动力</div>
-      <div className="bottom-info-left">SCP · 500kW Series</div>
+      <FooterInfo />
 
       <Navbar progress={progress} />
       <div className="scroll-spacer" style={{ height: sh }} />
@@ -454,48 +470,50 @@ const T = {
   zh: {
     navHome: "首页", navProducts: "产品中心", navAbout: "关于我们",
     navCases: "项目案例", navService: "销售与服务", scroll: "滚动探索",
-    homeTitle: "500kW 发电机组",
-    homeIntro1: "深柴电力是一家集柴油发电机组研发、生产、销售和服务于一体的综合性企业。公司拥有现代化生产基地，年产能超过5000台套",
-    homeIntro2: "依托国企实力，结合市场化创新机制，深柴电力已发展成为国内领先的柴油发电机组制造商",
-    allinoneDesc: "模块化布局，出厂前整机测试，抵达现场后添加燃料连接电缆即可运行，将部署时间从数周缩短至几天",
-    engineDesc: "提供全系列发动机品牌选择，满足不同应用场景",
-    airflowDesc: "进气更加顺畅、排气阻力低、散热效率高",
-    chassisDesc: "为您考虑到了恶劣工况的使用环境，确保在任何情况下机组结构都能稳定运行",
-    homeBigTitle: "500kw发电机",
-    stage_home: "深柴动力",
-    stage_allinone: "ALL-IN-ONE",
-    stage_engine: "动力系统稳定输出",
-    stage_airflow: "气流设计",
-    stage_chassis: "减震设计结构",
-    subHome: "SHENCHAI POWER · 始于 2004",
-    sub_home: "SHENCHAI POWER · 始于 2004",
-    sub_allinone: "设计与快速部署",
-    sub_engine: "多元动力 · 按需匹配",
-    sub_airflow: "AIRFLOW OPTIMIZATION",
-    sub_chassis: "强化底盘 · IP55 防护",
+    placeholder: "开发中",
+    homeTitle: "开发中",
+    homeIntro1: "开发中",
+    homeIntro2: "开发中",
+    allinoneDesc: "开发中",
+    engineDesc: "开发中",
+    airflowDesc: "开发中",
+    chassisDesc: "开发中",
+    homeBigTitle: "如感兴趣可咨询",
+    stage_home: "开发中",
+    stage_allinone: "开发中",
+    stage_engine: "开发中",
+    stage_airflow: "开发中",
+    stage_chassis: "开发中",
+    subHome: "开发中",
+    sub_home: "开发中",
+    sub_allinone: "开发中",
+    sub_engine: "开发中",
+    sub_airflow: "开发中",
+    sub_chassis: "开发中",
   },
   en: {
     navHome: "Home", navProducts: "Products", navAbout: "About",
     navCases: "Projects", navService: "Service & Sales", scroll: "SCROLL",
-    homeTitle: "500kW Generator Set",
-    homeIntro1: "Shenchai Power is a comprehensive enterprise integrating R&D, production, sales and service of diesel generator sets. With a modern manufacturing base, annual capacity exceeds 5,000 units.",
-    homeIntro2: "Backed by state-owned strength combined with market-oriented innovation, Shenchai Power has become a leading diesel generator set manufacturer in China.",
-    allinoneDesc: "Modular layout, factory pre-tested. Add fuel and connect cables on site to start running, reducing deployment from weeks to days.",
-    engineDesc: "Full range of engine brands available to meet diverse application scenarios.",
-    airflowDesc: "Smoother intake, lower exhaust resistance, higher cooling efficiency.",
-    chassisDesc: "Designed for harsh working conditions, ensuring stable operation of the unit in any environment.",
-    homeBigTitle: "500kw Generator",
-    stage_home: "Shenchai Power",
-    stage_allinone: "ALL-IN-ONE",
-    stage_engine: "Engine System",
-    stage_airflow: "Airflow Design",
-    stage_chassis: "Chassis Structure",
-    subHome: "SHENCHAI POWER · Since 2004",
-    sub_home: "SHENCHAI POWER · Since 2004",
-    sub_allinone: "Design & Fast Deployment",
-    sub_engine: "Multiple Power · On Demand",
-    sub_airflow: "AIRFLOW OPTIMIZATION",
-    sub_chassis: "Reinforced Chassis · IP55",
+    placeholder: "Under development",
+    homeTitle: "Under development",
+    homeIntro1: "Under development",
+    homeIntro2: "Under development",
+    allinoneDesc: "Under development",
+    engineDesc: "Under development",
+    airflowDesc: "Under development",
+    chassisDesc: "Under development",
+    homeBigTitle: "Please inquire if interested",
+    stage_home: "Under development",
+    stage_allinone: "Under development",
+    stage_engine: "Under development",
+    stage_airflow: "Under development",
+    stage_chassis: "Under development",
+    subHome: "Under development",
+    sub_home: "Under development",
+    sub_allinone: "Under development",
+    sub_engine: "Under development",
+    sub_airflow: "Under development",
+    sub_chassis: "Under development",
   }
 };
 

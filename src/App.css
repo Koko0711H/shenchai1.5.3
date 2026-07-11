@@ -41,6 +41,7 @@ body { font-family: "SF Pro Display","Helvetica Neue","PingFang SC","Microsoft Y
 .right-inner.right-hidden { opacity: 0; transform: translateX(120px); }
 
 .module-img { max-width: 280px; max-height: 180px; border-radius: 8px; opacity: 0.7; margin-bottom: 8px; object-fit: cover; display: block; }
+.module-img, .engine-img { opacity: 1; }
 
 .statetable-container { position: absolute; left: 0; top: 50%; transform: translateY(-50%); pointer-events: auto; }
 .statetable-content { position: relative; padding-left: 24px; }
@@ -57,15 +58,16 @@ body { font-family: "SF Pro Display","Helvetica Neue","PingFang SC","Microsoft Y
 .content-title.home-title { font-size: clamp(32px, 4vmin, 52px); font-weight: 700; letter-spacing: -1px; }
 .content-subtitle.home-subtitle { font-size: clamp(13px, 1.4vmin, 18px); font-weight: 400; letter-spacing: 4px; color: rgba(255,255,255,0.85); }
 
-.content-left.chassis-left { position: absolute; top: 50%; left: 200px; transform: translateY(-50%); max-width: 45%; }
+.content-left.chassis-left { position: absolute; top: 64%; left: 200px; transform: translateY(-50%); max-width: 45%; }
 .content-title.chassis-title { font-size: clamp(32px, 4vmin, 52px); font-weight: 700; letter-spacing: -1px; }
 .content-subtitle.chassis-subtitle { font-size: clamp(13px, 1.4vmin, 18px); font-weight: 400; letter-spacing: 4px; color: rgba(255,255,255,0.6); }
 
 .content-left.airflow-left { position: absolute; top: 8vh; right: 60px; max-width: 50%; text-align: right; }
 .content-title.airflow-title { font-size: clamp(32px, 4vmin, 52px); font-weight: 700; letter-spacing: -1px; }
 .content-subtitle.airflow-subtitle { font-size: clamp(13px, 1.4vmin, 18px); font-weight: 400; letter-spacing: 4px; color: rgba(255,255,255,0.6); }
-.airflow-top-right { position: absolute; bottom: 10vh; left: 80px; text-align: left; }
-.airflow-desc-text { font-size: clamp(20px, 2.6vmin, 30px); font-weight: 300; line-height: 1.9; letter-spacing: 0.8px; color: rgba(255,255,255,0.85); white-space: nowrap; }
+.airflow-top-right { position: absolute; inset: 0; width: 100%; height: 100%; text-align: right; }
+.airflow-top-right .module-img { position: absolute; left: 80px; bottom: 10vh; margin: 0; }
+.airflow-desc-text { position: absolute; right: 60px; bottom: 10vh; width: min(42vw, 580px); margin: 0; text-align: right; font-size: clamp(18px, 2.2vmin, 28px); font-weight: 300; line-height: 1.75; letter-spacing: 0.5px; color: rgba(255,255,255,0.85); white-space: normal; }
 
 .engine-top-left { position: absolute; top: 8vh; left: 80px; max-width: 420px; text-align: left; }
 .engine-desc-text { font-size: clamp(20px, 2.6vmin, 30px); font-weight: 300; line-height: 1.6; letter-spacing: 0.8px; color: rgba(255,255,255,0.85); white-space: nowrap; }
@@ -154,7 +156,7 @@ body { font-family: "SF Pro Display","Helvetica Neue","PingFang SC","Microsoft Y
 
 
 .chassis-img { margin-left: auto; display: block; }
-.home-top-right { position: absolute; top: 8vh; right: 60px; z-index: 15; }
+.home-top-right { position: absolute; top: 12vh; right: 60px; z-index: 15; }
 .home-big-title { font-size: clamp(48px, 7vmin, 96px); font-weight: 800; letter-spacing: 4px; white-space: nowrap; background: linear-gradient(135deg, #f5af19 0%, #f12711 50%, #f5af19 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmer 8s ease-in-out infinite; text-shadow: none; filter: drop-shadow(0 0 30px rgba(241,39,17,0.4)); }
 @keyframes shimmer { 0%,100% { background-position: 0% center; } 50% { background-position: 200% center; } }
 .img-right { margin-left: auto; }
@@ -263,6 +265,8 @@ body { font-family: "SF Pro Display","Helvetica Neue","PingFang SC","Microsoft Y
   .nav-links { gap: 12px; }
   .nav-links a { font-size: 11px; }
   .nav-brand { font-size: 14px; }
+  .airflow-top-right .module-img { left: 16px; bottom: 12vh; }
+  .airflow-desc-text { right: 16px; bottom: 12vh; width: 52vw; font-size: 15px; line-height: 1.65; }
 }
 
 
