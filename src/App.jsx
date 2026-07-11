@@ -33,9 +33,9 @@ const STAGES = [
   { id: "engine", label: "动力系统稳定输出", cam: [0, 1.5, 6], target: [0, 0, 0], fov: 28, rot: 0,
     subtitle: "多元动力 · 按需匹配",
     desc: "提供全系列发动机品牌选择，满足不同应用场景，稳定输出每一瓦特" },
-  { id: "airflow", label: "高强度负载", cam: [-7.5, 5, 4.5], target: [0, 0, 0], fov: 24, rot: 1.5,
-    subtitle: "HIGH-INTENSITY LOAD",
-    desc: "大修周期可达30000小时，重载带载能力强，适合频繁突加负载场景" },
+  { id: "airflow", label: "气流设计", cam: [-7.5, 5, 4.5], target: [0, 0, 0], fov: 24, rot: 1.5,
+    subtitle: "AIRFLOW DESIGN",
+    desc: "采用斜向导流进气结构，进气更加顺畅、排气阻力低、散热效率高。" },
   { id: "chassis", label: "减震设计结构", cam: [-5.5, -1.5, 1.8], target: [0, 0.5, 0], fov: 30, rot: 3.0,
     subtitle: "强化底盘 · IP55 防护",
     desc: "强化底盘结构、高效减震系统、底盘IP55防护等级。为您考虑到了恶劣工况的使用环境，确保在任何情况下机组结构都能稳定运行" },
@@ -293,7 +293,7 @@ function ContentOverlay({ stages, currentIdx, progress, ready }) {
         )}
         {isAf && (
           <div className="airflow-top-right text-block-animate">
-            <img className="module-img" src="/images/airflow.jpg" alt="高强度负载" />
+            <img className="module-img" src="/images/airflow.png" alt="气流设计" />
             <p className="airflow-desc-text">{t("airflowDesc")}</p>
           </div>
         )}
@@ -459,19 +459,19 @@ const T = {
     homeIntro2: "依托国企实力，结合市场化创新机制，深柴电力已发展成为国内领先的柴油发电机组制造商",
     allinoneDesc: "模块化布局，出厂前整机测试，抵达现场后添加燃料连接电缆即可运行，将部署时间从数周缩短至几天",
     engineDesc: "提供全系列发动机品牌选择，满足不同应用场景",
-    airflowDesc: "大修周期可达30000小时，重载带载能力强，适合频繁突加负载场景",
+    airflowDesc: "采用斜向导流进气结构，进气更加顺畅、排气阻力低、散热效率高。",
     chassisDesc: "为您考虑到了恶劣工况的使用环境，确保在任何情况下机组结构都能稳定运行",
     homeBigTitle: "500kW发电机组",
     stage_home: "深柴动力",
     stage_allinone: "ALL-IN-ONE",
     stage_engine: "动力系统稳定输出",
-    stage_airflow: "高强度负载",
+    stage_airflow: "气流设计",
     stage_chassis: "减震设计结构",
     subHome: "SHENCHAI POWER · 始于 2004",
     sub_home: "SHENCHAI POWER · 始于 2004",
     sub_allinone: "设计与快速部署",
     sub_engine: "多元动力 · 按需匹配",
-    sub_airflow: "HIGH-INTENSITY LOAD",
+    sub_airflow: "AIRFLOW DESIGN",
     sub_chassis: "强化底盘 · IP55 防护",
   },
   en: {
@@ -482,19 +482,19 @@ const T = {
     homeIntro2: "Backed by state-owned strength combined with market-oriented innovation, Shenchai Power has become a leading diesel generator set manufacturer in China.",
     allinoneDesc: "Modular layout, factory pre-tested. Add fuel and connect cables on site to start running, reducing deployment from weeks to days.",
     engineDesc: "Full range of engine brands available to meet diverse application scenarios.",
-    airflowDesc: "Major overhaul intervals can reach 30,000 hours, with strong heavy-load capability for frequent sudden-load applications.",
+    airflowDesc: "The angled airflow-guiding intake design improves intake flow, reduces exhaust resistance, and increases cooling efficiency.",
     chassisDesc: "Designed for harsh working conditions, ensuring stable operation of the unit in any environment.",
     homeBigTitle: "500kW Generator Set",
     stage_home: "Shenchai Power",
     stage_allinone: "ALL-IN-ONE",
     stage_engine: "Engine System",
-    stage_airflow: "High-Intensity Load",
+    stage_airflow: "Airflow Design",
     stage_chassis: "Vibration-Damping Structure",
     subHome: "SHENCHAI POWER · Since 2004",
     sub_home: "SHENCHAI POWER · Since 2004",
     sub_allinone: "Design & Fast Deployment",
     sub_engine: "Multiple Power · On Demand",
-    sub_airflow: "HIGH-INTENSITY LOAD",
+    sub_airflow: "AIRFLOW DESIGN",
     sub_chassis: "Reinforced Chassis · IP55",
   }
 };
