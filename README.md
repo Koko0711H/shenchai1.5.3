@@ -1,16 +1,31 @@
-# React + Vite
+# 深柴动力子站 — 3D 产品展示
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React、Three.js 与 Vite 构建的滚动驱动 3D 产品展示站点。本目录是五个子站之一。
 
-Currently, two official plugins are available:
+## 当前配置（2026-07-13）
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 默认语言：英文；顶栏可切换中文。
+- 顶栏：透明背景、白色 Logo 与白色控件，菜单跳转到主站对应模块。
+- “网上展厅”链接：`https://shenchai1-5-3.pages.dev/`。
+- 产品切换：页面左上方悬浮按键，滚动后淡出；可在五个子站之间跳转。
+- 3D 模型与图片位于 `public/`，构建结果位于 `dist/`。
 
-## React Compiler
+## 产品切换地址
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| 产品 | 地址 |
+| --- | --- |
+| 静音型发电机组 | `https://1-5-7.pages.dev/` |
+| 开架型发电机组 | `https://shenchai1-5-6.pages.dev/` |
+| 开架型发电机组（小）/ 网上展厅 | `https://shenchai1-5-3.pages.dev/` |
+| 移动拖车式发电机组 | `https://1-5-8.pages.dev/` |
+| 高压配电系统 | `https://1-5-9.pages.dev/` |
 
-## Expanding the Oxlint configuration
+## 开发与部署
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```bash
+pnpm install
+pnpm dev
+pnpm build
+```
+
+Cloudflare Pages 构建命令为 `pnpm build`，输出目录为 `dist`。直接上传时只上传 `dist` 内的内容。

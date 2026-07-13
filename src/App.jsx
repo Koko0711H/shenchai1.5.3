@@ -327,27 +327,88 @@ function ContentOverlay({ stages, currentIdx, progress, ready }) {
   )
 }
 
-function Navbar({ progress }) {
+function SocialLinks() {
+  return <>
+    <a className="social-icon" href="#" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+    <a className="social-icon" href="#" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+    <a className="social-icon" href="#" aria-label="抖音"><svg width="30" height="30" viewBox="0 0 48 48" fill="currentColor"><path d="M33.5 8.5c1.5 3 4 5 7 5.5v4.5c-2.5 0-5-1-7-3v13c0 6.5-5 11.5-11.5 11.5S10.5 35 10.5 28.5 15.5 17 22 17v4.5c-4 0-7 3-7 7s3 7 7 7 7-3 7-7V8.5h4.5z"/></svg></a>
+  </>
+}
+
+function QuoteIcon() {
+  return <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+}
+
+function Navbar() {
   const { lang, setLang, t } = useLang();
-  const scrolled = progress > 0.02;
   return (
-    <div className={"navbar" + (scrolled ? " scrolled" : "")}>
-      <img className="nav-logo" src="/logo.png" alt="Shenchai" />
-      <div className="nav-links">
+    <header className="navbar">
+      <div className="navbar-inner">
+      <a className="nav-logo-link" href="https://shenchaidongli.pages.dev/"><img className="nav-logo" src="/logo.png" alt="FlyDeer 深柴动力" /></a>
+      <nav className="nav-links">
         <a href="https://shenchaidongli.pages.dev/">{t("navHome")}</a>
         <a href="https://shenchaidongli.pages.dev/#products">{t("navProducts")}</a>
+        <a href="https://shenchai1-5-3.pages.dev/">{lang === "zh" ? "网上展厅" : "Showroom"}</a>
         <a href="https://shenchaidongli.pages.dev/#about">{t("navAbout")}</a>
         <a href="https://shenchaidongli.pages.dev/#cases">{t("navCases")}</a>
         <a href="https://shenchaidongli.pages.dev/#contact">{t("navService")}</a>
-      </div>
-      <div className="lang-btns">
+      </nav>
+      <div className="header-right">
         <button className={"lang-btn" + (lang === "zh" ? " active" : "")} onClick={() => setLang("zh")}>中文</button>
-        <button className={"lang-btn" + (lang === "en" ? " active" : "")} onClick={() => setLang("en")}>EN</button>
+        <button className={"lang-btn" + (lang === "en" ? " active" : "")} onClick={() => setLang("en")}>English</button>
+        <SocialLinks />
+        <a className="quote-btn" href="https://shenchaidongli.pages.dev/#contact"><QuoteIcon />获取报价</a>
       </div>
-    </div>
+      </div>
+    </header>
   );
 }
 
+
+const PRODUCT_SITES = [
+  { label: "静音型发电机组", url: "https://1-5-7.pages.dev/" },
+  { label: "开架型发电机组", url: "https://shenchai1-5-6.pages.dev/" },
+  { label: "开架型发电机组（小）", url: "https://shenchai1-5-3.pages.dev/" },
+  { label: "移动拖车式发电机组", url: "https://1-5-8.pages.dev/" },
+  { label: "高压配电系统", url: "https://1-5-9.pages.dev/" },
+]
+
+function ProductSwitcher({ hidden }) {
+  const [open, setOpen] = useState(false)
+  const currentHost = typeof window === "undefined" ? "" : window.location.hostname
+
+  return (
+    <div className={"product-switcher" + (hidden ? " is-hidden" : "")}>
+      <button
+        type="button"
+        className="product-switcher-toggle"
+        onClick={() => setOpen((visible) => !visible)}
+        aria-expanded={open}
+      >
+        <span>产品切换</span>
+        <span className={"product-switcher-arrow" + (open ? " open" : "")} aria-hidden="true">⌄</span>
+      </button>
+      {open && (
+        <div className="product-switcher-menu">
+          {PRODUCT_SITES.map((site) => {
+            const isCurrent = new URL(site.url).hostname === currentHost
+            return (
+              <a
+                key={site.url}
+                href={site.url}
+                className={isCurrent ? "active" : ""}
+                aria-current={isCurrent ? "page" : undefined}
+                onClick={() => setOpen(false)}
+              >
+                {site.label}
+              </a>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
 
 function ScrollHint({ show, progress }) {
   const { t } = useLang();
@@ -441,7 +502,8 @@ export default function App() {
       <div className="bottom-info">© 2026 深柴动力</div>
       <div className="bottom-info-left">SCP · 500kW Series</div>
 
-      <Navbar progress={progress} />
+      <ProductSwitcher hidden={progress > 0.02} />
+      <Navbar />
       <div className="scroll-spacer" style={{ height: sh }} />
     </div>
     </LanguageProvider>
@@ -501,7 +563,7 @@ const T = {
 
 const LanguageContext = createContext();
 function LanguageProvider({ children }) {
-  const [lang, setLang] = useState("zh");
+  const [lang, setLang] = useState("en");
   const t = useCallback((key) => T[lang][key] || key, [lang]);
   return <LanguageContext.Provider value={{ lang, setLang, t }}>{children}</LanguageContext.Provider>;
 }
