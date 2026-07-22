@@ -16,7 +16,7 @@ window.addEventListener("error", (e) => {
 });
 window.addEventListener("unhandledrejection", (e) => {
   const div = document.createElement("div");
-  div.style.cssText = "position:fixed;top:40px;left:0;right:0;z-index:9999;background:#ff8800;color:white;padding:20px;font-size:14px;font-family:monospace;word-break:break-all";
+  div.style.cssText = "position:fixed;top:40px;left:0;right:0;z-index:9999;background:#0a2850;color:white;padding:20px;font-size:14px;font-family:monospace;word-break:break-all";
   div.textContent = "Promise Error: " + (e.reason?.message || String(e.reason));
   document.body.prepend(div);
 });
@@ -127,7 +127,7 @@ function CameraController({ progress }) {
 }
 
 function Particles() {
-  const COUNT = 200
+  const COUNT = 100
   const ref = useRef()
   const speeds = useRef(new Float32Array(COUNT))
   const offsets = useRef(new Float32Array(COUNT))
@@ -184,9 +184,9 @@ function Particles() {
     <points ref={ref} geometry={geo}>
       <pointsMaterial
         size={0.04}
-        color="#ff8844"
+        color="#ffffff"
         transparent
-        opacity={0.4}
+        opacity={0.7}
         sizeAttenuation
         blending={THREE.AdditiveBlending}
         depthWrite={false}
@@ -195,7 +195,41 @@ function Particles() {
   )
 }
 
-function LightingController() { return null }
+function ScrollLightAtmosphere({ progress }) {
+  const glows = [
+    { x: 82, y: 16, strength: 0.9 },
+    { x: 18, y: 24, strength: 0.82 },
+    { x: 76, y: 72, strength: 0.94 },
+    { x: 22, y: 76, strength: 0.86 },
+    { x: 50, y: 18, strength: 0.9 },
+  ]
+  const scaled = Math.min(Math.max(progress * STAGES.length, 0), glows.length - 1)
+  const fromIndex = Math.floor(scaled)
+  const toIndex = Math.min(fromIndex + 1, glows.length - 1)
+  const localProgress = scaled - fromIndex
+  const blend = localProgress * localProgress * (3 - 2 * localProgress)
+  const from = glows[fromIndex]
+  const to = glows[toIndex]
+  const mix = (key) => from[key] + (to[key] - from[key]) * blend
+  const driftX = Math.sin(progress * Math.PI * 3) * 1.2
+  const driftY = Math.cos(progress * Math.PI * 2.5) * 0.8
+  const enter = Math.min(Math.max((progress - 0.012) / 0.045, 0), 1)
+  const leave = Math.min(Math.max((0.965 - progress) / 0.035, 0), 1)
+  const visibility = enter * leave
+
+  return (
+    <div className="scroll-light-atmosphere" style={{ opacity: visibility }} aria-hidden="true">
+      <span
+        className="screen-light-halo"
+        style={{
+          "--light-x": `${mix("x") + driftX}%`,
+          "--light-y": `${mix("y") + driftY}%`,
+          opacity: mix("strength")
+        }}
+      />
+    </div>
+  )
+}
 
 const LINE_PATH = "M2.30809 318.07Q21.0208 316.441 50.1395 311.552Q108.449 301.761 160.401 285.447Q187.503 276.937 211.151 264.212Q225.389 256.551 250.01 240.238Q275.87 223.104 291.318 214.863Q317.146 201.086 347.378 191.695Q407.665 172.97 460.721 167.081Q495.936 163.173 558.47 163.173Q585.817 163.173 628.557 141.714Q654.353 128.763 708.923 94.4123Q742.671 73.1683 758.993 63.6874Q786.229 47.8662 806.111 39.6039Q862.305 16.252 914.714 7.87042Q961.797 0.340553 1040.78 0.0125411Q1117.18 -0.304734 1171.71 7.40653Q1227.48 15.2934 1289.78 35.6259Q1321.15 45.8667 1370.62 65.0861Q1407.99 79.6092 1425.84 85.4202Q1454.72 94.8298 1481 99.0339Q1520.17 105.3 1617.15 102.785Q1665.69 101.526 1706.36 99.0087"
 
@@ -216,7 +250,7 @@ function Preloader({ loaded }) {
       <div className="gear-loader">
         <svg className="gear-rotator" viewBox="0 0 120 120" width="100" height="100">
           <path d="M60 8c-3.3 0-6.5.4-9.5 1.2l-2.5-6.2c-.8-2-3-3-5-2.2l-6.2 2.5c-2 .8-3 3-2.2 5l2.3 5.7c-3.6 2-6.8 4.5-9.5 7.5l-5.8-2.3c-2-.8-4.2.2-5 2.2l-2.5 6.2c-.8 2 .2 4.2 2.2 5l5.7 2.3c-.9 3.2-1.4 6.5-1.4 9.9s.5 6.7 1.4 9.9l-5.7 2.3c-2 .8-3 3-2.2 5l2.5 6.2c.8 2 3 3 5 2.2l5.8-2.3c2.7 3 5.9 5.5 9.5 7.5l-2.3 5.7c-.8 2 .2 4.2 2.2 5l6.2 2.5c2 .8 4.2-.2 5-2.2l2.5-6.2c3 .8 6.2 1.2 9.5 1.2s6.5-.4 9.5-1.2l2.5 6.2c.8 2 3 3 5 2.2l6.2-2.5c2-.8 3-3 2.2-5l-2.3-5.7c3.6-2 6.8-4.5 9.5-7.5l5.8 2.3c2 .8 4.2-.2 5-2.2l2.5-6.2c.8-2-.2-4.2-2.2-5l-5.7-2.3c.9-3.2 1.4-6.5 1.4-9.9s-.5-6.7-1.4-9.9l5.7-2.3c2-.8 3-3 2.2-5l-2.5-6.2c-.8-2-3-3-5-2.2l-5.8 2.3c-2.7-3-5.9-5.5-9.5-7.5l2.3-5.7c.8-2-.2-4.2-2.2-5l-6.2-2.5c-2-.8-4.2.2-5 2.2L69.5 9.2C66.5 8.4 63.3 8 60 8zm0 15c13.3 0 24 10.7 24 24s-10.7 24-24 24-24-10.7-24-24 10.7-24 24-24z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
-          <circle cx="60" cy="47" r="14" fill="none" stroke="rgba(255,200,150,0.5)" strokeWidth="2" strokeDasharray={`${pct/100 * 88} 88`} transform="rotate(-90 60 47)"/>
+          <circle cx="60" cy="47" r="14" fill="none" stroke="rgba(10,40,80,0.72)" strokeWidth="2" strokeDasharray={`${pct/100 * 88} 88`} transform="rotate(-90 60 47)"/>
         </svg>
       </div>
       <div className="progress-num"><p>{Math.round(pct)}%</p></div>
@@ -357,7 +391,7 @@ function Navbar() {
         <button className={"lang-btn" + (lang === "zh" ? " active" : "")} onClick={() => setLang("zh")}>中文</button>
         <button className={"lang-btn" + (lang === "en" ? " active" : "")} onClick={() => setLang("en")}>English</button>
         <SocialLinks />
-        <a className="quote-btn" href="https://shenchaidongli.pages.dev/#contact"><QuoteIcon />获取报价</a>
+        <a className="quote-btn" href="https://shenchaidongli.pages.dev/#contact"><QuoteIcon />{lang === "zh" ? "获取报价" : "Get Quote"}</a>
       </div>
       </div>
     </header>
@@ -422,6 +456,41 @@ function ScrollHint({ show, progress }) {
   )
 }
 
+
+function InquiryFooter({ visible }) {
+  const { lang } = useLang()
+  const zh = lang === "zh"
+
+  return (
+    <section className={"inquiry-footer" + (visible ? " is-visible" : "")} aria-hidden={!visible}>
+      <div className="inquiry-footer-inner">
+        <p className="inquiry-brand">SHENCHAI POWER</p>
+        <h2>{zh ? "为您的项目，匹配可靠动力方案。" : "Reliable power, configured for your project."}</h2>
+        <p className="inquiry-copy">
+          {zh
+            ? "告诉我们功率、工况与交付需求，深柴动力团队将为您提供选型与技术支持。"
+            : "Share your power, operating and delivery requirements. Our team will support product selection and engineering decisions."}
+        </p>
+        <div className="inquiry-actions">
+          <a className="inquiry-primary" href="https://shenchaidongli.pages.dev/#contact" tabIndex={visible ? 0 : -1}>
+            {zh ? "获取项目报价" : "Request a Quote"}
+          </a>
+          <a className="inquiry-secondary" href="https://shenchaidongli.pages.dev/#products" tabIndex={visible ? 0 : -1}>
+            {zh ? "返回产品中心" : "Explore Products"}
+          </a>
+        </div>
+      </div>
+      <footer className="inquiry-site-footer">
+        <span>© 2026 SHENCHAI POWER</span>
+        <span>{zh ? "深柴动力 · 可靠动力解决方案" : "Shenchai Power · Reliable Power Solutions"}</span>
+        <a href="https://shenchaidongli.pages.dev/" tabIndex={visible ? 0 : -1}>
+          {zh ? "返回主站 ↑" : "Main Site ↑"}
+        </a>
+      </footer>
+    </section>
+  )
+}
+
 export default function App() {
   const [progress, setProgress] = useState(0)
   const [ready, setReady] = useState(false)
@@ -442,7 +511,10 @@ export default function App() {
 
   const goToStage = useCallback((idx) => {
     const max = document.documentElement.scrollHeight - window.innerHeight
-    const target = (idx + 0.5) / STAGES.length * max
+    const targetProgress = idx === STAGES.length - 1
+      ? 0.84
+      : (idx + 0.5) / STAGES.length
+    const target = targetProgress * max
     window.scrollTo({ top: target, behavior: "smooth" })
   }, [])
 
@@ -470,18 +542,18 @@ export default function App() {
             state.gl.setClearColor("#0a0a0a", 0)
             setReady(true)
           }}>
-          <ambientLight intensity={2.0} color="#ffffff" />
-          <directionalLight position={[5, 8, 5]} intensity={6.0} color="#ffe4b5" castShadow shadow-mapSize={[1024, 1024]} />
-          <directionalLight position={[-3, 5, -3]} intensity={2.0} color="#ffcc88" />
-          <pointLight position={[0, 4, 2]} intensity={3.0} color="#ff8844" />
-          <hemisphereLight args={["#ffffff", "#446688", 1.2]} />
+          <ambientLight intensity={0.95} color="#ffffff" />
+          <hemisphereLight args={["#ffffff", "#ffffff", 0.48]} />
           <Suspense fallback={null}>
             <ModelGroup url="/generator.glb" progress={progress} />
           </Suspense>
           <Particles />
-          <LightingController />
+          <directionalLight position={[6, 9, 6]} intensity={4.8} color="#ffffff" castShadow shadow-mapSize={[1024, 1024]} />
+          <directionalLight position={[-5, 4, 3]} intensity={1.7} color="#ffffff" />
+          <directionalLight position={[0, 5, -7]} intensity={2.2} color="#ffffff" />
           <CameraController progress={progress} />
         </Canvas>
+        <ScrollLightAtmosphere progress={progress} />
       </div>
 
       <div className="deco-line-left" />
@@ -504,6 +576,7 @@ export default function App() {
 
       <ProductSwitcher hidden={progress > 0.02} />
       <Navbar />
+      <InquiryFooter visible={progress > 0.88} />
       <div className="scroll-spacer" style={{ height: sh }} />
     </div>
     </LanguageProvider>
@@ -517,8 +590,8 @@ const T = {
     navHome: "首页", navProducts: "产品中心", navAbout: "关于我们",
     navCases: "项目案例", navService: "销售与服务", scroll: "滚动探索",
     homeTitle: "500kW发电机组",
-    homeIntro1: "深柴电力是一家集柴油发电机组研发、生产、销售和服务于一体的综合性企业。公司拥有现代化生产基地，年产能超过5000台套",
-    homeIntro2: "依托国企实力，结合市场化创新机制，深柴电力已发展成为国内领先的柴油发电机组制造商",
+    homeIntro1: "深柴动力是一家集柴油发电机组研发、生产、销售和服务于一体的综合性企业。公司拥有现代化生产基地，年产能超过5000台套",
+    homeIntro2: "依托自主技术、完善的质量体系与市场化创新机制，深柴动力已发展成为国内领先的柴油发电机组制造商",
     allinoneDesc: "模块化布局，出厂前整机测试，抵达现场后添加燃料连接电缆即可运行，将部署时间从数周缩短至几天",
     engineDesc: "提供全系列发动机品牌选择，满足不同应用场景",
     airflowDesc: "采用斜向导流进气结构，进气更加顺畅、排气阻力低、散热效率高。",
