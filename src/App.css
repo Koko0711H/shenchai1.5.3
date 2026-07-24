@@ -401,6 +401,7 @@ body,
 
 .navbar,
 .navbar.scrolled {
+  z-index:110;
   height: 70px;
   padding: 0;
   color: var(--brand-white);
@@ -465,7 +466,10 @@ body,
   color: var(--brand-white);
   background: var(--brand-red);
   border: 1px solid var(--brand-red);
-  border-radius: 4px;
+  border-radius: 6px;
+  overflow: hidden;
+  background-clip: padding-box;
+  transform: translateZ(0);
   font-weight: 600;
 }
 .quote-btn:hover {
@@ -726,4 +730,182 @@ body,
 }
 @media (prefers-reduced-motion: reduce) {
   .scroll-light-atmosphere { transition: none; }
+}
+
+
+/* ===== Canonical multi-site navigation / 2026-07-24 ===== */
+.navbar,
+.navbar.scrolled {
+  height: 70px;
+  padding: 0;
+  color: #fff;
+  background: rgba(6, 26, 51, 0.97);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 8px rgba(6, 26, 51, 0.16);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.navbar-inner {
+  width: 100%;
+  max-width: 1400px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 clamp(18px, 2.4vw, 40px);
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.6vw, 28px);
+}
+
+.nav-logo-link {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.nav-logo {
+  width: auto;
+  height: 36px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.nav-links {
+  position: static;
+  height: 100%;
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: clamp(8px, 1.55vw, 24px);
+  transform: none;
+}
+
+.nav-links a,
+.nav-links a:hover {
+  position: relative;
+  height: 100%;
+  padding: 0 clamp(3px, 0.5vw, 8px);
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.94);
+  background: transparent;
+  border-radius: 0;
+  font-size: clamp(14px, 1.05vw, 16px);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.25s ease, background-color 0.25s ease;
+}
+
+.nav-links a::after {
+  position: absolute;
+  right: clamp(3px, 0.5vw, 8px);
+  bottom: 0;
+  left: clamp(3px, 0.5vw, 8px);
+  height: 2px;
+  background: #e63946;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+
+.nav-links a.active::after,
+.nav-links a:hover::after {
+  transform: scaleX(1);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 0.85vw, 14px);
+  flex-shrink: 0;
+}
+
+.header-right .lang-btn {
+  padding: 5px 3px 7px;
+  color: rgba(255, 255, 255, 0.58);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.header-right .lang-btn:hover,
+.header-right .lang-btn.active {
+  color: #fff;
+  border-color: #e63946;
+  background: transparent;
+}
+
+.social-icon {
+  width: 34px;
+  height: 34px;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.72);
+}
+
+.quote-btn {
+  min-height: 36px;
+  margin-left: 4px;
+  padding: 8px clamp(10px, 1.2vw, 18px);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  background: #e63946;
+  border: 1px solid #e63946;
+  border-radius: 6px;
+  overflow: hidden;
+  background-clip: padding-box;
+  transform: translateZ(0);
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.quote-btn:hover {
+  color: #fff;
+  background: #c92f3b;
+  border-color: #c92f3b;
+}
+
+@media (max-width: 1180px) {
+  .header-right .social-icon { display: none; }
+}
+
+@media (max-width: 900px) {
+  .navbar,
+  .navbar.scrolled { height: 64px; }
+  .navbar-inner {
+    padding: 0 16px;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .nav-logo { height: 28px; }
+  .nav-links,
+  .header-right .quote-btn,
+  .header-right .social-icon { display: none; }
+  .header-right {
+    margin-left: auto;
+    gap: 12px;
+  }
+  .header-right .lang-btn {
+    padding: 5px 3px 7px;
+    font-size: 14px;
+  }
 }
