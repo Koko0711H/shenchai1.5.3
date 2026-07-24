@@ -5,6 +5,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 import "./App.css"
+import { getInitialLanguage, syncLanguageToUrl, withLanguage } from "./languageRouting"
 
 // Error display for debugging
 window.addEventListener("error", (e) => {
@@ -378,20 +379,20 @@ function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-inner">
-      <a className="nav-logo-link" href="https://shenchaidongli.pages.dev/" aria-label={lang === "zh" ? "深柴动力首页" : "ShenChai Power home"}><img className="nav-logo" src="/logo.png" alt="FlyDeer 深柴动力" /></a>
+      <a className="nav-logo-link" href={withLanguage("https://shenchaidongli.pages.dev/", lang)} aria-label={lang === "zh" ? "深柴动力首页" : "ShenChai Power home"}><img className="nav-logo" src="/logo.png" alt="FlyDeer 深柴动力" /></a>
       <nav className="nav-links">
-        <a href="https://shenchaidongli.pages.dev/">{t("navHome")}</a>
-        <a className="active" aria-current="page" href="https://shenchaidongli.pages.dev/#products">{t("navProducts")}</a>
-        <a href="https://shenchai1-5-3.pages.dev/">{lang === "zh" ? "网上展厅" : "Online Showroom"}</a>
-        <a href="https://3-0-1.pages.dev/">{t("navAbout")}</a>
-        <a href="https://shenchaidongli.pages.dev/#cases">{t("navCases")}</a>
-        <a href="https://shenchaidongli.pages.dev/#contact">{t("navService")}</a>
+        <a href={withLanguage("https://shenchaidongli.pages.dev/", lang)}>{t("navHome")}</a>
+        <a className="active" aria-current="page" href={withLanguage("https://shenchaidongli.pages.dev/#products", lang)}>{t("navProducts")}</a>
+        <a href={withLanguage("https://shenchai1-5-3.pages.dev/", lang)}>{lang === "zh" ? "网上展厅" : "Online Showroom"}</a>
+        <a href={withLanguage("https://3-0-1.pages.dev/", lang)}>{t("navAbout")}</a>
+        <a href={withLanguage("https://shenchaidongli.pages.dev/#cases", lang)}>{t("navCases")}</a>
+        <a href={withLanguage("https://shenchaidongli.pages.dev/#contact", lang)}>{t("navService")}</a>
       </nav>
       <div className="header-right">
-        <button className={"lang-btn" + (lang === "zh" ? " active" : "")} onClick={() => setLang("zh")}>中文</button>
-        <button className={"lang-btn" + (lang === "en" ? " active" : "")} onClick={() => setLang("en")}>English</button>
+        <button type="button" className={"lang-btn" + (lang === "zh" ? " active" : "")} aria-pressed={lang === "zh"} onClick={() => setLang("zh")}>中文</button>
+        <button type="button" className={"lang-btn" + (lang === "en" ? " active" : "")} aria-pressed={lang === "en"} onClick={() => setLang("en")}>English</button>
         <SocialLinks />
-        <a className="quote-btn" href="https://shenchaidongli.pages.dev/#contact"><QuoteIcon />{lang === "zh" ? "获取报价" : "Get Quote"}</a>
+        <a className="quote-btn" href={withLanguage("https://shenchaidongli.pages.dev/#contact", lang)}><QuoteIcon />{lang === "zh" ? "获取报价" : "Get Quote"}</a>
       </div>
       </div>
     </header>
@@ -409,6 +410,7 @@ const PRODUCT_SITES = [
 
 function ProductSwitcher({ hidden }) {
   const [open, setOpen] = useState(false)
+  const { lang } = useLang()
   const currentHost = typeof window === "undefined" ? "" : window.location.hostname
 
   return (
@@ -429,7 +431,7 @@ function ProductSwitcher({ hidden }) {
             return (
               <a
                 key={site.url}
-                href={site.url}
+                href={withLanguage(site.url, lang)}
                 className={isCurrent ? "active" : ""}
                 aria-current={isCurrent ? "page" : undefined}
                 onClick={() => setOpen(false)}
@@ -472,10 +474,10 @@ function InquiryFooter({ visible }) {
             : "Share your power, operating and delivery requirements. Our team will support product selection and engineering decisions."}
         </p>
         <div className="inquiry-actions">
-          <a className="inquiry-primary" href="https://shenchaidongli.pages.dev/#contact" tabIndex={visible ? 0 : -1}>
+          <a className="inquiry-primary" href={withLanguage("https://shenchaidongli.pages.dev/#contact", lang)} tabIndex={visible ? 0 : -1}>
             {zh ? "获取项目报价" : "Request a Quote"}
           </a>
-          <a className="inquiry-secondary" href="https://shenchaidongli.pages.dev/#products" tabIndex={visible ? 0 : -1}>
+          <a className="inquiry-secondary" href={withLanguage("https://shenchaidongli.pages.dev/#products", lang)} tabIndex={visible ? 0 : -1}>
             {zh ? "返回产品中心" : "Explore Products"}
           </a>
         </div>
@@ -483,7 +485,7 @@ function InquiryFooter({ visible }) {
       <footer className="inquiry-site-footer">
         <span>© 2026 SHENCHAI POWER</span>
         <span>{zh ? "深柴动力 · 可靠动力解决方案" : "Shenchai Power · Reliable Power Solutions"}</span>
-        <a href="https://shenchaidongli.pages.dev/" tabIndex={visible ? 0 : -1}>
+        <a href={withLanguage("https://shenchaidongli.pages.dev/", lang)} tabIndex={visible ? 0 : -1}>
           {zh ? "返回主站 ↑" : "Main Site ↑"}
         </a>
       </footer>
@@ -636,7 +638,12 @@ const T = {
 
 const LanguageContext = createContext();
 function LanguageProvider({ children }) {
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState(() => getInitialLanguage("en"));
+
+  useEffect(() => {
+    syncLanguageToUrl(lang);
+  }, [lang]);
+
   const t = useCallback((key) => T[lang][key] || key, [lang]);
   return <LanguageContext.Provider value={{ lang, setLang, t }}>{children}</LanguageContext.Provider>;
 }
