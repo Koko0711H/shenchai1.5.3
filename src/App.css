@@ -353,7 +353,7 @@ body { font-family: "SF Pro Display","Helvetica Neue","PingFang SC","Microsoft Y
 }
 
 
-/* ===== Unified Shenchai brand shell ===== */
+/* ===== Unified FLYDEER POWER brand shell ===== */
 :root {
   --brand-navy: #0a2850;
   --brand-navy-deep: #061a33;
@@ -691,6 +691,80 @@ body,
   .inquiry-site-footer {
     transition: opacity 0.2s ease;
     transform: none;
+  }
+}
+
+/* ===== Industrial title system / 2026-07-24 ===== */
+.title-box {
+  max-width: min(900px, calc(100vw - 40px));
+}
+
+.content-title,
+.content-subtitle,
+.home-big-title,
+.inquiry-footer h2 {
+  text-wrap: balance;
+}
+
+.content-title,
+.content-title.home-title,
+.content-title.chassis-title,
+.content-title.airflow-title,
+.content-title.engine-title,
+.content-title.allinone-title {
+  max-width: min(760px, 86vw);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.content-subtitle,
+.content-subtitle.home-subtitle,
+.content-subtitle.chassis-subtitle,
+.content-subtitle.airflow-subtitle,
+.content-subtitle.engine-subtitle,
+.content-subtitle.allinone-subtitle {
+  max-width: min(780px, 86vw);
+  line-height: 1.45;
+  letter-spacing: 0.14em;
+}
+
+.home-big-title {
+  max-width: min(760px, 84vw);
+  white-space: normal;
+  line-height: 0.96;
+  letter-spacing: 0.015em;
+}
+
+.inquiry-brand {
+  letter-spacing: 0.14em;
+}
+
+@media (max-width: 768px) {
+  .title-box {
+    padding: 18px 20px;
+  }
+
+  .content-title,
+  .content-title.home-title,
+  .content-title.chassis-title,
+  .content-title.airflow-title,
+  .content-title.engine-title,
+  .content-title.allinone-title {
+    max-width: 82vw;
+    font-size: clamp(28px, 8.2vw, 44px);
+    line-height: 1.08;
+  }
+
+  .content-subtitle,
+  .content-subtitle.home-subtitle,
+  .content-subtitle.chassis-subtitle,
+  .content-subtitle.airflow-subtitle,
+  .content-subtitle.engine-subtitle,
+  .content-subtitle.allinone-subtitle {
+    max-width: 80vw;
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 0.1em;
   }
 }
 

@@ -26,7 +26,7 @@ window.addEventListener("unhandledrejection", (e) => {
 
 const STAGES = [
   { id: "home", label: "深柴动力", cam: [-2, 1.5, 5], target: [0, 0, 0], fov: 40, rot: 0,
-    subtitle: "SHENCHAI POWER · 始于 2004",
+    subtitle: "FLYDEER POWER · 始于 2004",
     desc: "专业柴油发电机组研发制造商，专注为客户提供可靠的电力解决方案" },
   { id: "allinone", label: "ALL-IN-ONE", cam: [0, 5, 7.5], target: [0, 0, 0], fov: 26, rot: -1.5,
     subtitle: "设计与快速部署",
@@ -379,7 +379,7 @@ function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-inner">
-      <a className="nav-logo-link" href={withLanguage("https://shenchaidongli.pages.dev/", lang)} aria-label={lang === "zh" ? "深柴动力首页" : "ShenChai Power home"}><img className="nav-logo" src="/logo.png" alt="FlyDeer 深柴动力" /></a>
+      <a className="nav-logo-link" href={withLanguage("https://shenchaidongli.pages.dev/", lang)} aria-label={lang === "zh" ? "深柴动力首页" : "FLYDEER POWER home"}><img className="nav-logo" src="/logo.png" alt="FLYDEER POWER 深柴动力" /></a>
       <nav className="nav-links">
         <a href={withLanguage("https://shenchaidongli.pages.dev/", lang)}>{t("navHome")}</a>
         <a className="active" aria-current="page" href={withLanguage("https://shenchaidongli.pages.dev/#products", lang)}>{t("navProducts")}</a>
@@ -466,7 +466,7 @@ function InquiryFooter({ visible }) {
   return (
     <section className={"inquiry-footer" + (visible ? " is-visible" : "")} aria-hidden={!visible}>
       <div className="inquiry-footer-inner">
-        <p className="inquiry-brand">SHENCHAI POWER</p>
+        <p className="inquiry-brand">FLYDEER POWER</p>
         <h2>{zh ? "为您的项目，匹配可靠动力方案。" : "Reliable power, configured for your project."}</h2>
         <p className="inquiry-copy">
           {zh
@@ -483,8 +483,8 @@ function InquiryFooter({ visible }) {
         </div>
       </div>
       <footer className="inquiry-site-footer">
-        <span>© 2026 SHENCHAI POWER</span>
-        <span>{zh ? "深柴动力 · 可靠动力解决方案" : "Shenchai Power · Reliable Power Solutions"}</span>
+        <span>© 2026 FLYDEER POWER</span>
+        <span>{zh ? "深柴动力 · 可靠动力解决方案" : "FLYDEER POWER · Reliable Power Solutions"}</span>
         <a href={withLanguage("https://shenchaidongli.pages.dev/", lang)} tabIndex={visible ? 0 : -1}>
           {zh ? "返回主站 ↑" : "Main Site ↑"}
         </a>
@@ -604,8 +604,8 @@ const T = {
     stage_engine: "动力系统稳定输出",
     stage_airflow: "气流设计",
     stage_chassis: "减震设计结构",
-    subHome: "SHENCHAI POWER · 始于 2004",
-    sub_home: "SHENCHAI POWER · 始于 2004",
+    subHome: "FLYDEER POWER · 始于 2004",
+    sub_home: "FLYDEER POWER · 始于 2004",
     sub_allinone: "设计与快速部署",
     sub_engine: "多元动力 · 按需匹配",
     sub_airflow: "AIRFLOW DESIGN",
@@ -615,20 +615,20 @@ const T = {
     navHome: "Home", navProducts: "Products", navAbout: "About Us",
     navCases: "Projects", navService: "Sales & Service", scroll: "SCROLL",
     homeTitle: "500kW Generator Set",
-    homeIntro1: "Shenchai Power is a comprehensive enterprise integrating R&D, production, sales and service of diesel generator sets. With a modern manufacturing base, annual capacity exceeds 5,000 units.",
-    homeIntro2: "Backed by state-owned strength combined with market-oriented innovation, Shenchai Power has become a leading diesel generator set manufacturer in China.",
+    homeIntro1: "FLYDEER POWER is a comprehensive enterprise integrating R&D, production, sales and service of diesel generator sets. With a modern manufacturing base, annual capacity exceeds 5,000 units.",
+    homeIntro2: "Backed by state-owned strength combined with market-oriented innovation, FLYDEER POWER has become a leading diesel generator set manufacturer in China.",
     allinoneDesc: "Modular layout, factory pre-tested. Add fuel and connect cables on site to start running, reducing deployment from weeks to days.",
     engineDesc: "Full range of engine brands available to meet diverse application scenarios.",
     airflowDesc: "The angled airflow-guiding intake design improves intake flow, reduces exhaust resistance, and increases cooling efficiency.",
     chassisDesc: "Designed for harsh working conditions, ensuring stable operation of the unit in any environment.",
     homeBigTitle: "500kW Generator Set",
-    stage_home: "Shenchai Power",
+    stage_home: "FLYDEER POWER",
     stage_allinone: "ALL-IN-ONE",
     stage_engine: "Engine System",
     stage_airflow: "Airflow Design",
     stage_chassis: "Vibration-Damping Structure",
-    subHome: "SHENCHAI POWER · Since 2004",
-    sub_home: "SHENCHAI POWER · Since 2004",
+    subHome: "FLYDEER POWER · Since 2004",
+    sub_home: "FLYDEER POWER · Since 2004",
     sub_allinone: "Design & Fast Deployment",
     sub_engine: "Multiple Power · On Demand",
     sub_airflow: "AIRFLOW DESIGN",
@@ -642,6 +642,9 @@ function LanguageProvider({ children }) {
 
   useEffect(() => {
     syncLanguageToUrl(lang);
+    document.title = lang === "zh"
+      ? "深柴动力｜3D 产品展厅"
+      : "FLYDEER POWER | 3D Product Showroom";
   }, [lang]);
 
   const t = useCallback((key) => T[lang][key] || key, [lang]);
